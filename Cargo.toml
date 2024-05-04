@@ -1,0 +1,10 @@
+[package]
+name = "termfmt"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = { verion ="0.4.38", optional = true }
+
+[features]
+command = []
