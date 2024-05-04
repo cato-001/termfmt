@@ -115,7 +115,17 @@ where
     Value: Display,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.value)
+        write!(f, "\x1b[{};{}", self.fg as u8, self.bg as u8)?;
+        if let Some(style) = self.style {
+            write!(f, ";{}", style as u8)?;
+        };
+        write!(
+            f,
+            "m{}\x1b[{};{}m",
+            self.value,
+            Fg::default() as u8,
+            Bg::default() as u8
+        )
     }
 }
 
