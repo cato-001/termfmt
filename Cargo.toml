@@ -2,6 +2,8 @@
 name = "termfmt"
 version = "0.1.0"
 edition = "2021"
+description = "Opinionated formatting for library primatives with color and outputing to the terminal."
+license = "MIT"
 
 [dependencies]
 chrono = { verion ="0.4.38", optional = true }
