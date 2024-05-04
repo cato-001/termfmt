@@ -18,7 +18,7 @@ impl CommandFmt {
 
 impl Display for CommandFmt {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let Some(command) = self.value else {
+        let Some(ref command) = self.value else {
             return write!(f, "...");
         };
         command.fmt(f)
