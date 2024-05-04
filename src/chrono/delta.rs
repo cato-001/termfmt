@@ -3,22 +3,9 @@ use std::fmt::Display;
 use chrono::TimeDelta;
 
 use crate::color::TermStyle;
-use crate::TermFmt;
 
 pub struct DeltaFmt {
     value: Option<TimeDelta>,
-}
-
-impl TermFmt<DeltaFmt> for TimeDelta {
-    fn termfmt(self) -> DeltaFmt {
-        DeltaFmt { value: Some(self) }
-    }
-}
-
-impl TermFmt<DeltaFmt> for Option<TimeDelta> {
-    fn termfmt(self) -> DeltaFmt {
-        DeltaFmt { value: self }
-    }
 }
 
 impl Display for DeltaFmt {

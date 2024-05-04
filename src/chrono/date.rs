@@ -3,22 +3,9 @@ use std::fmt::Display;
 use chrono::{Datelike, Days, Local, NaiveDate};
 
 use crate::color::TermStyle;
-use crate::TermFmt;
 
 pub struct DateFmt {
     value: Option<NaiveDate>,
-}
-
-impl TermFmt<DateFmt> for NaiveDate {
-    fn termfmt(self) -> DateFmt {
-        DateFmt { value: Some(self) }
-    }
-}
-
-impl TermFmt<DateFmt> for Option<NaiveDate> {
-    fn termfmt(self) -> DateFmt {
-        DateFmt { value: self }
-    }
 }
 
 impl Display for DateFmt {
