@@ -1,5 +1,7 @@
 use std::fmt::Display;
 
+pub use {color::TermStyle, output::TermOutput};
+
 pub trait TermFmt<Value>: Display {
     fn termfmt(value: Value) -> Self;
 }
@@ -10,4 +12,5 @@ pub mod chrono;
 #[cfg(feature = "command")]
 pub mod command;
 
-pub mod color;
+mod color;
+mod output;
