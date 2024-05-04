@@ -1,5 +1,6 @@
 use std::fmt::{Debug, Display};
-use std::process::Command;
+use std::io;
+use std::process::{Command, Output};
 
 use crate::TermFmt;
 
@@ -26,5 +27,24 @@ impl<'a> Display for CommandFmt<'a> {
             return write!(f, "...");
         };
         command.fmt(f)
+    }
+}
+
+pub struct OutputErrFmt {
+    value: io::Result<Output>,
+}
+
+impl TermFmt<io::Result<Output>> for OutputErrFmt {
+    fn termfmt(value: io::Result<Output>) -> Self {
+        Self { value }
+    }
+}
+
+impl Display for OutputErrFmt {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self.value {
+            Ok(result) => ,
+            Err(error) => todo!(),
+        }
     }
 }
