@@ -2,21 +2,21 @@ use std::fmt::{Debug, Display};
 use std::io;
 use std::process::{Command, Output};
 
-pub struct CommandFmt<'a> {
-    value: Option<&'a Command>,
+pub struct CommandFmt {
+    value: Option<Command>,
 }
 
-impl<'a> CommandFmt<'a> {
-    pub fn new(value: &'a Command) -> Self {
+impl CommandFmt {
+    pub fn new(value: Command) -> Self {
         Self { value: Some(value) }
     }
 
-    pub fn option(value: Option<&'a Command>) -> Self {
+    pub fn option(value: Option<Command>) -> Self {
         Self { value }
     }
 }
 
-impl<'a> Display for CommandFmt<'a> {
+impl Display for CommandFmt {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let Some(command) = self.value else {
             return write!(f, "...");
