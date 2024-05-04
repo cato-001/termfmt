@@ -9,16 +9,15 @@ pub struct TimeFmt {
     value: Option<NaiveTime>,
 }
 
-impl TermFmt<NaiveTime> for TimeFmt {
-    fn termfmt(value: NaiveTime) -> Self {
-        let value = Some(value);
-        Self { value }
+impl TermFmt<TimeFmt> for NaiveTime {
+    fn termfmt(self) -> TimeFmt {
+        TimeFmt { value: Some(self) }
     }
 }
 
-impl TermFmt<Option<NaiveTime>> for TimeFmt {
-    fn termfmt(value: Option<NaiveTime>) -> Self {
-        Self { value }
+impl TermFmt<TimeFmt> for Option<NaiveTime> {
+    fn termfmt(self) -> TimeFmt {
+        TimeFmt { value: self }
     }
 }
 

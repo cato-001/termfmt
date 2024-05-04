@@ -9,16 +9,15 @@ pub struct DeltaFmt {
     value: Option<TimeDelta>,
 }
 
-impl TermFmt<TimeDelta> for DeltaFmt {
-    fn termfmt(value: TimeDelta) -> Self {
-        let value = Some(value);
-        Self { value }
+impl TermFmt<DeltaFmt> for TimeDelta {
+    fn termfmt(self) -> DeltaFmt {
+        DeltaFmt { value: Some(self) }
     }
 }
 
-impl TermFmt<Option<TimeDelta>> for DeltaFmt {
-    fn termfmt(value: Option<TimeDelta>) -> Self {
-        Self { value }
+impl TermFmt<DeltaFmt> for Option<TimeDelta> {
+    fn termfmt(self) -> DeltaFmt {
+        DeltaFmt { value: self }
     }
 }
 

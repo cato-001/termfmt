@@ -2,8 +2,11 @@ use std::fmt::Display;
 
 pub use {color::TermStyle, output::TermOutput};
 
-pub trait TermFmt<Value>: Display {
-    fn termfmt(value: Value) -> Self;
+pub trait TermFmt<Value>
+where
+    Value: Display,
+{
+    fn termfmt(self) -> Value;
 }
 
 #[cfg(feature = "chrono")]

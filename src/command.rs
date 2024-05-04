@@ -8,16 +8,15 @@ pub struct CommandFmt<'a> {
     value: Option<&'a Command>,
 }
 
-impl<'a> TermFmt<&'a Command> for CommandFmt<'a> {
-    fn termfmt(value: &'a Command) -> Self {
-        let value = Some(value);
-        Self { value }
+impl<'a> TermFmt<CommandFmt<'a>> for &'a Command {
+    fn termfmt(self) -> CommandFmt<'a> {
+        CommandFmt { value: Some(self) }
     }
 }
 
-impl<'a> TermFmt<Option<&'a Command>> for CommandFmt<'a> {
-    fn termfmt(value: Option<&'a Command>) -> Self {
-        Self { value }
+impl<'a> TermFmt<CommandFmt<'a>> for Option<&'a Command> {
+    fn termfmt(self) -> CommandFmt<'a> {
+        CommandFmt { value: self }
     }
 }
 
@@ -34,16 +33,16 @@ pub struct OutputErrFmt {
     value: io::Result<Output>,
 }
 
-impl TermFmt<io::Result<Output>> for OutputErrFmt {
-    fn termfmt(value: io::Result<Output>) -> Self {
-        Self { value }
+impl TermFmt<OutputErrFmt> for io::Result<Output> {
+    fn termfmt(self) -> OutputErrFmt {
+        OutputErrFmt { value: self }
     }
 }
 
 impl Display for OutputErrFmt {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self.value {
-            Ok(result) => ,
+        match &self.value {
+            Ok(result) => todo!(),
             Err(error) => todo!(),
         }
     }
