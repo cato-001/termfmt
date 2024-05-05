@@ -1,5 +1,7 @@
 use std::io::{stderr, stdout, IsTerminal};
 
+use crate::TermStyle;
+
 pub fn termout(interactive: impl Fn() -> String, unstyled: impl Fn() -> String) {
     if is_stdout_interactive() {
         println!("{}", interactive());
@@ -8,9 +10,25 @@ pub fn termout(interactive: impl Fn() -> String, unstyled: impl Fn() -> String) 
     }
 }
 
+pub fn terminfo(interactive: impl Fn() -> String, unstyled: impl Fn() -> String) {
+    if is_stdout_interactive() {
+        println!("{} {}", "INFO".fg_green().bold(), interactive());
+    } else {
+        println!("{}", unstyled());
+    }
+}
+
+pub fn termarrow(interactive: impl Fn() -> String, unstyled: impl Fn() -> String) {
+    if is_stdout_interactive() {
+        println!("{} {}", "->".fg_blue().bold(), interactive());
+    } else {
+        println!("{}", unstyled());
+    }
+}
+
 pub fn termerr(interactive: impl Fn() -> String, unstyled: impl Fn() -> String) {
     if is_stderr_interactive() {
-        eprintln!("{}", interactive());
+        eprintln!("\n{} {}", "ERROR".fg_red().bold(), interactive());
     } else {
         eprintln!("{}", unstyled());
     }
@@ -79,7 +97,7 @@ impl<Value, Error> TermError<Value, Error> for Result<Value, Error> {
             Ok(value) => Some(value),
             Err(error) => {
                 if is_stderr_interactive() {
-                    eprintln!("{}", interactive(&error));
+                    eprintln!("\n{} {}", "ERROR".fg_red().bold(), interactive(&error));
                 } else {
                     eprintln!("{}", unstyled(&error));
                 }
@@ -93,7 +111,7 @@ impl<Value, Error> TermError<Value, Error> for Result<Value, Error> {
             Ok(value) => Some(value),
             Err(error) => {
                 if is_stderr_interactive() {
-                    eprintln!("{}", interactive(&error));
+                    eprintln!("\n{} {}", "ERROR".fg_red().bold(), interactive(&error));
                 }
                 None
             }
