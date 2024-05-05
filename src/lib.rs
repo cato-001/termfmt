@@ -1,4 +1,7 @@
-pub use {color::TermStyle, output::TermOutput};
+pub use {
+    color::TermStyle,
+    output::{TermError, TermOutput},
+};
 
 #[cfg(feature = "chrono")]
 pub mod chrono;
