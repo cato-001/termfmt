@@ -140,10 +140,11 @@ where
         };
         write!(
             f,
-            "m{}\x1b[{};{}m",
+            "m{}\x1b[{};{};{}m",
             self.value,
             Fg::default() as u8,
-            Bg::default() as u8
+            Bg::default() as u8,
+            Style::Reset
         )
     }
 }
