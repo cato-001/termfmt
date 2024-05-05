@@ -2,6 +2,8 @@ use std::fmt::{Debug, Display};
 use std::io;
 use std::process::{Command, Output};
 
+use eyre::eyre;
+
 pub struct CommandFmt {
     value: Option<Command>,
 }
@@ -25,15 +27,16 @@ impl Display for CommandFmt {
     }
 }
 
-pub struct OutputErrFmt {
-    value: io::Result<Output>,
+pub trait CmdOutErr {
+    fn cmd_out_err(self) -> eyre::Result<Output>;
 }
 
-impl Display for OutputErrFmt {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match &self.value {
-            Ok(result) => todo!(),
-            Err(error) => todo!(),
+impl CmdOutErr for io::Result<Output> {
+    fn cmd_out_err(self) -> eyre::Result<Output> {
+        let output = self?;
+        if !output.status.success() {
+            return Err(eyre!("exit status {}", output.status));
         }
+        Ok(output)
     }
 }

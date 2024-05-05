@@ -10,16 +10,6 @@ pub trait TermOutput {
     fn termout_interactive(self, interactive: impl Fn(&Self) -> String) -> Self;
 
     fn termout_unstyled(self, unstyled: impl Fn(&Self) -> String) -> Self;
-
-    fn termerr(
-        self,
-        interactive: impl Fn(&Self) -> String,
-        unstyled: impl Fn(&Self) -> String,
-    ) -> Self;
-
-    fn termerr_interactive(self, interactive: impl Fn(&Self) -> String) -> Self;
-
-    fn termerr_unstyled(self, unstyled: impl Fn(&Self) -> String) -> Self;
 }
 
 impl<Value> TermOutput for Value {
@@ -49,32 +39,61 @@ impl<Value> TermOutput for Value {
         }
         self
     }
+}
 
+pub trait TermError<Value, Error> {
     fn termerr(
         self,
-        interactive: impl Fn(&Self) -> String,
-        unstyled: impl Fn(&Self) -> String,
-    ) -> Self {
-        if is_stderr_interactive() {
-            eprintln!("{}", interactive(&self));
-        } else {
-            eprintln!("{}", unstyled(&self));
+        interactive: impl Fn(&Error) -> String,
+        unstyled: impl Fn(&Error) -> String,
+    ) -> Option<Value>;
+
+    fn termerr_interactive(self, interactive: impl Fn(&Error) -> String) -> Option<Value>;
+
+    fn termerr_unstyled(self, unstyled: impl Fn(&Error) -> String) -> Option<Value>;
+}
+
+impl<Value, Error> TermError<Value, Error> for Result<Value, Error> {
+    fn termerr(
+        self,
+        interactive: impl Fn(&Error) -> String,
+        unstyled: impl Fn(&Error) -> String,
+    ) -> Option<Value> {
+        match self {
+            Ok(value) => Some(value),
+            Err(error) => {
+                if is_stderr_interactive() {
+                    eprintln!("{}", interactive(&error));
+                } else {
+                    eprintln!("{}", unstyled(&error));
+                }
+                None
+            }
         }
-        self
     }
 
-    fn termerr_interactive(self, interactive: impl Fn(&Self) -> String) -> Self {
-        if is_stderr_interactive() {
-            eprintln!("{}", interactive(&self));
+    fn termerr_interactive(self, interactive: impl Fn(&Error) -> String) -> Option<Value> {
+        match self {
+            Ok(value) => Some(value),
+            Err(error) => {
+                if is_stderr_interactive() {
+                    eprintln!("{}", interactive(&error));
+                }
+                None
+            }
         }
-        self
     }
 
-    fn termerr_unstyled(self, unstyled: impl Fn(&Self) -> String) -> Self {
-        if !is_stderr_interactive() {
-            eprintln!("{}", unstyled(&self));
+    fn termerr_unstyled(self, unstyled: impl Fn(&Error) -> String) -> Option<Value> {
+        match self {
+            Ok(value) => Some(value),
+            Err(error) => {
+                if !is_stderr_interactive() {
+                    eprintln!("{}", unstyled(&error));
+                }
+                None
+            }
         }
-        self
     }
 }
 
