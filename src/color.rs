@@ -22,6 +22,12 @@ enum Fg {
     BrightGrey = 97,
 }
 
+impl Display for Fg {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", *self as u8)
+    }
+}
+
 #[derive(Clone, Copy, Default)]
 enum Bg {
     #[default]
@@ -44,8 +50,15 @@ enum Bg {
     BrightGrey = 107,
 }
 
+impl Display for Bg {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", *self as u8)
+    }
+}
+
 #[derive(Clone, Copy)]
 enum Style {
+    Reset = 0,
     Underline = 4,
     Bold = 1,
     Blink = 5,
@@ -54,6 +67,12 @@ enum Style {
     Faint = 2,
     Italic = 3,
     Crossedout = 9,
+}
+
+impl Display for Style {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", *self as u8)
+    }
 }
 
 struct StyleFmt<Value> {
@@ -115,9 +134,9 @@ where
     Value: Display,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "\x1b[{};{}", self.fg as u8, self.bg as u8)?;
+        write!(f, "\x1b[{};{}", self.fg, self.bg)?;
         if let Some(style) = self.style {
-            write!(f, ";{}", style as u8)?;
+            write!(f, ";{}", style)?;
         };
         write!(
             f,
@@ -254,6 +273,10 @@ where
     }
     fn crossedout(self) -> impl TermStyle {
         StyleFmt::style(self, Style::Crossedout)
+    }
+
+    fn reset_style(self) -> impl TermStyle {
+        StyleFmt::style(self, Style::Reset)
     }
 }
 
@@ -419,6 +442,12 @@ where
 
     fn crossedout(self) -> impl TermStyle {
         self.with_style(Style::Crossedout)
+    }
+
+    fn reset_style(self) -> impl TermStyle {
+        self.with_fg(Fg::default())
+            .with_bg(Bg::default())
+            .with_style(Style::Reset)
     }
 }
 
