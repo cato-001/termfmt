@@ -1,6 +1,6 @@
 pub use {
     color::TermStyle,
-    output::{TermError, TermOutput},
+    output::{termerr, termout, TermError, TermOutput},
 };
 
 #[cfg(feature = "chrono")]

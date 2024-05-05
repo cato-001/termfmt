@@ -1,5 +1,21 @@
 use std::io::{stderr, stdout, IsTerminal};
 
+pub fn termout(interactive: impl Fn() -> String, unstyled: impl Fn() -> String) {
+    if is_stdout_interactive() {
+        println!("{}", interactive());
+    } else {
+        println!("{}", unstyled());
+    }
+}
+
+pub fn termerr(interactive: impl Fn() -> String, unstyled: impl Fn() -> String) {
+    if is_stderr_interactive() {
+        eprintln!("{}", interactive());
+    } else {
+        eprintln!("{}", unstyled());
+    }
+}
+
 pub trait TermOutput {
     fn termout(
         self,
