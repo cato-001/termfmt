@@ -13,7 +13,7 @@ pub fn termout(interactive: impl Fn() -> String, unstyled: impl Fn() -> String) 
 
 pub fn terminfo(interactive: impl Fn() -> String, unstyled: impl Fn() -> String) {
     if is_stdout_interactive() {
-        println!("{} {}", "INFO".fg_green().bold(), interactive());
+        println!("\n{} {}", "INFO".fg_green().bold(), interactive());
     } else {
         println!("{}", unstyled());
     }
