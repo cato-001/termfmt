@@ -1,3 +1,4 @@
+use std::fmt::Display;
 use std::io::{stderr, stdout, IsTerminal};
 
 use crate::TermStyle;
@@ -75,55 +76,53 @@ impl<Value> TermOutput for Value {
     }
 }
 
-pub trait TermError<Value, Error> {
-    fn termerr(
-        self,
-        interactive: impl Fn(&Error) -> String,
-        unstyled: impl Fn(&Error) -> String,
-    ) -> Option<Value>;
+pub trait TermError<Value, Error>
+where
+    Error: Display,
+{
+    fn termerr(self) -> Option<Value>;
 
-    fn termerr_interactive(self, interactive: impl Fn(&Error) -> String) -> Option<Value>;
+    fn termerr_interactive(self) -> Option<Value>;
 
-    fn termerr_unstyled(self, unstyled: impl Fn(&Error) -> String) -> Option<Value>;
+    fn termerr_unstyled(self) -> Option<Value>;
 }
 
-impl<Value, Error> TermError<Value, Error> for Result<Value, Error> {
-    fn termerr(
-        self,
-        interactive: impl Fn(&Error) -> String,
-        unstyled: impl Fn(&Error) -> String,
-    ) -> Option<Value> {
+impl<Value, Error> TermError<Value, Error> for Result<Value, Error>
+where
+    Error: Display,
+{
+    fn termerr(self) -> Option<Value> {
         match self {
             Ok(value) => Some(value),
             Err(error) => {
                 if is_stderr_interactive() {
-                    eprintln!("\n{} {}", "ERROR".fg_red().bold(), interactive(&error));
+                    eprintln!("\n{} {}", "ERROR".fg_red().bold(), error);
                 } else {
-                    eprintln!("{}", unstyled(&error));
+                    eprintln!("{}", error);
                 }
                 None
             }
         }
     }
 
-    fn termerr_interactive(self, interactive: impl Fn(&Error) -> String) -> Option<Value> {
+    fn termerr_interactive(self) -> Option<Value> {
         match self {
             Ok(value) => Some(value),
             Err(error) => {
                 if is_stderr_interactive() {
-                    eprintln!("\n{} {}", "ERROR".fg_red().bold(), interactive(&error));
+                    eprintln!("\n{} {}", "ERROR".fg_red().bold(), error);
                 }
                 None
             }
         }
     }
 
-    fn termerr_unstyled(self, unstyled: impl Fn(&Error) -> String) -> Option<Value> {
+    fn termerr_unstyled(self) -> Option<Value> {
         match self {
             Ok(value) => Some(value),
             Err(error) => {
                 if !is_stderr_interactive() {
-                    eprintln!("{}", unstyled(&error));
+                    eprintln!("{}", error);
                 }
                 None
             }
