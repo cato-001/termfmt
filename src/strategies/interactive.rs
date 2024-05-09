@@ -34,4 +34,12 @@ impl TermFmtStrategy for InteractiveTermFmt {
     fn action(&self, value: impl Display) {
         println!("{} {}", "->".fg_blue().bold(), value);
     }
+
+    fn start(&self) {
+        println!();
+    }
+
+    fn end(&self) {
+        println!();
+    }
 }

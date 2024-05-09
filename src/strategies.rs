@@ -22,6 +22,9 @@ pub trait TermFmtStrategy {
     fn headline(&self, value: impl Display);
     fn text(&self, value: impl Display);
     fn action(&self, value: impl Display);
+
+    fn start(&self) {}
+    fn end(&self) {}
 }
 
 enum TermFmtStrategyImpl {
