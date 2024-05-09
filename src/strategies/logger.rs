@@ -2,7 +2,7 @@ use std::fmt::Display;
 
 use crate::chrono::{DateFmt, TimeFmt};
 
-use super::TermFmtStrategie;
+use super::TermFmtStrategy;
 
 #[derive(Default)]
 pub struct LoggerTermFmt {
@@ -24,7 +24,7 @@ pub enum LogLevel {
     Error,
 }
 
-impl TermFmtStrategie for LoggerTermFmt {
+impl TermFmtStrategy for LoggerTermFmt {
     fn debug(&self, value: impl Display) {
         if matches!(self.level, LogLevel::Debug) {
             let date = DateFmt::today();

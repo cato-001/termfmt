@@ -1,10 +1,10 @@
 use std::fmt::Display;
 
-use super::TermFmtStrategie;
+use super::TermFmtStrategy;
 
 pub struct PlainTermFmt;
 
-impl TermFmtStrategie for PlainTermFmt {
+impl TermFmtStrategy for PlainTermFmt {
     fn debug(&self, value: impl Display) {
         println!("{}", value);
     }

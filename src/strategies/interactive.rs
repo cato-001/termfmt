@@ -2,11 +2,11 @@ use std::fmt::Display;
 
 use crate::TermStyle;
 
-use super::TermFmtStrategie;
+use super::TermFmtStrategy;
 
 pub struct InteractiveTermFmt;
 
-impl TermFmtStrategie for InteractiveTermFmt {
+impl TermFmtStrategy for InteractiveTermFmt {
     fn debug(&self, value: impl Display) {
         println!("\n{} {}", "DEBUG".fg_bright_cyan().bold(), value)
     }

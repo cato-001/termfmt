@@ -6,7 +6,7 @@ description = "Opinionated formatting for library primatives with color and outp
 license = "MIT"
 
 [dependencies]
-chrono = { version = "0.4", optional = true }
+chrono = "0.4"
 clap = "4.5.4"
 eyre = "0.6.12"
 
