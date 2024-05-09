@@ -122,18 +122,22 @@ impl TermStrategiesExt for Command {
     fn term_strategies(self) -> Command {
         self.args([
             Arg::new("interactive")
+                .long("interactive")
                 .action(ArgAction::SetTrue)
                 .conflicts_with_all(["csv", "plain", "logger"])
                 .help("force interactive output"),
             Arg::new("csv")
+                .long("csv")
                 .action(ArgAction::SetTrue)
                 .conflicts_with_all(["interactive", "plain", "logger"])
                 .help("force csv output"),
             Arg::new("plain")
+                .long("plain")
                 .action(ArgAction::SetTrue)
                 .conflicts_with_all(["interactive", "csv", "logger"])
                 .help("force plain output"),
             Arg::new("logger")
+                .long("logger")
                 .action(ArgAction::SetTrue)
                 .conflicts_with_all(["interactive", "csv", "plain"])
                 .help("force logger output"),
