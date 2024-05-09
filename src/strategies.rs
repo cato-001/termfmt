@@ -115,6 +115,24 @@ impl TermFmtStrategy for TermFmtStrategyImpl {
             TermFmtStrategyImpl::Logger() => todo!(),
         }
     }
+
+    fn start(&self) {
+        match self {
+            TermFmtStrategyImpl::Interactive(strategy) => strategy.start(),
+            TermFmtStrategyImpl::Csv() => todo!(),
+            TermFmtStrategyImpl::Plain(strategy) => strategy.start(),
+            TermFmtStrategyImpl::Logger() => todo!(),
+        }
+    }
+
+    fn end(&self) {
+        match self {
+            TermFmtStrategyImpl::Interactive(strategy) => strategy.end(),
+            TermFmtStrategyImpl::Csv() => todo!(),
+            TermFmtStrategyImpl::Plain(strategy) => strategy.end(),
+            TermFmtStrategyImpl::Logger() => todo!(),
+        }
+    }
 }
 
 pub trait TermStrategiesExt {
