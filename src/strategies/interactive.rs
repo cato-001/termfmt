@@ -42,4 +42,8 @@ impl TermFmtStrategy for InteractiveTermFmt {
     fn end(&self) {
         println!();
     }
+
+    fn data(&self, data: impl crate::data::DataDisplay) {
+        self.headline(data.message());
+    }
 }

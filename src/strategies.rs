@@ -3,6 +3,8 @@ use std::io::{stdout, IsTerminal};
 
 use clap::{Arg, ArgAction, ArgMatches, Command};
 
+use crate::data::DataDisplay;
+
 pub use {
     interactive::InteractiveTermFmt,
     logger::{LogLevel, LoggerTermFmt},
@@ -25,6 +27,8 @@ pub trait TermFmtStrategy {
 
     fn start(&self) {}
     fn end(&self) {}
+
+    fn data(&self, data: impl DataDisplay);
 }
 
 enum TermFmtStrategyImpl {
@@ -130,6 +134,15 @@ impl TermFmtStrategy for TermFmtStrategyImpl {
             TermFmtStrategyImpl::Interactive(strategy) => strategy.end(),
             TermFmtStrategyImpl::Csv() => todo!(),
             TermFmtStrategyImpl::Plain(strategy) => strategy.end(),
+            TermFmtStrategyImpl::Logger() => todo!(),
+        }
+    }
+
+    fn data(&self, data: impl DataDisplay) {
+        match self {
+            TermFmtStrategyImpl::Interactive(strategy) => strategy.data(data),
+            TermFmtStrategyImpl::Csv() => todo!(),
+            TermFmtStrategyImpl::Plain(strategy) => strategy.data(data),
             TermFmtStrategyImpl::Logger() => todo!(),
         }
     }

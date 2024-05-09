@@ -13,4 +13,5 @@ pub mod chrono;
 pub mod strategies;
 
 mod color;
+mod data;
 mod output;

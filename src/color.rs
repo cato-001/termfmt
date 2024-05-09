@@ -454,3 +454,4 @@ where
 
 impl<'a> TermStyle for &'a str {}
 impl TermStyle for String {}
+impl<'a> TermStyle for std::path::Display<'a> {}

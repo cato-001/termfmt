@@ -76,4 +76,8 @@ impl TermFmtStrategy for LoggerTermFmt {
         let time = TimeFmt::now();
         println!("ACTION [{} {}]: {}", date, time, value);
     }
+
+    fn data(&self, data: impl crate::data::DataDisplay) {
+        todo!()
+    }
 }

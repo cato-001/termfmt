@@ -32,4 +32,8 @@ impl TermFmtStrategy for PlainTermFmt {
     fn action(&self, value: impl Display) {
         println!("{}", value);
     }
+
+    fn data(&self, data: impl crate::data::DataDisplay) {
+        todo!()
+    }
 }
