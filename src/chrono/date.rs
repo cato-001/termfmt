@@ -8,6 +8,13 @@ pub struct DateFmt {
     value: Option<NaiveDate>,
 }
 
+impl DateFmt {
+    pub fn today() -> Self {
+        let today = Local::now().date_naive();
+        Self { value: Some(today) }
+    }
+}
+
 impl Display for DateFmt {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let Some(value) = self.value else {

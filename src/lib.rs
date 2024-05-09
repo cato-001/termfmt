@@ -12,5 +12,7 @@ pub mod command;
 #[cfg(feature = "layout")]
 pub mod layout;
 
+pub mod strategies;
+
 mod color;
 mod output;

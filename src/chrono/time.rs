@@ -1,11 +1,18 @@
 use std::fmt::Display;
 
-use chrono::NaiveTime;
+use chrono::{Local, NaiveTime};
 
 use crate::color::TermStyle;
 
 pub struct TimeFmt {
     value: Option<NaiveTime>,
+}
+
+impl TimeFmt {
+    pub fn now() -> Self {
+        let now = Local::now().time();
+        Self { value: Some(now) }
+    }
 }
 
 impl Display for TimeFmt {
