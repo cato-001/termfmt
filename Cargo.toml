@@ -4,6 +4,7 @@ version = "0.1.9"
 edition = "2021"
 description = "Opinionated formatting for library primatives with color and outputing to the terminal."
 license = "MIT"
+repository = "https://github.com/Lukas412/termfmt"
 
 [dependencies]
 chrono = "0.4.38"
