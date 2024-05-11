@@ -14,6 +14,14 @@ pub fn termarrow(value: impl Display) {
     println!("{} {}", "->".fg_blue().bold(), value);
 }
 
-pub fn termheader(value: impl TermStyle) {
+pub fn termh1(value: impl TermStyle) {
     println!("\n{}", value.fg_green().bold());
+}
+
+pub fn termh2(value: impl TermStyle) {
+    println!("\n{}", value.fg_blue().bold());
+}
+
+pub fn termh3(value: impl TermStyle) {
+    println!("\n{}", value.fg_magenta().bold());
 }
