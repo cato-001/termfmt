@@ -3,16 +3,16 @@ use std::process::{ExitStatus, Output};
 
 use eyre::eyre;
 
-pub trait CmdOutErr {
-    fn cmd_out_err(self) -> eyre::Result<Output>;
+pub trait CommandOutputError {
+    fn output_error(self) -> eyre::Result<Output>;
 }
 
-pub trait CmdStatErr {
-    fn cmd_stat_err(self) -> eyre::Result<ExitStatus>;
+pub trait CommandStatusError {
+    fn status_error(self) -> eyre::Result<ExitStatus>;
 }
 
-impl CmdOutErr for io::Result<Output> {
-    fn cmd_out_err(self) -> eyre::Result<Output> {
+impl CommandOutputError for io::Result<Output> {
+    fn output_error(self) -> eyre::Result<Output> {
         let output = self?;
         if !output.status.success() {
             return Err(eyre!("exit status {}", output.status));
@@ -21,8 +21,8 @@ impl CmdOutErr for io::Result<Output> {
     }
 }
 
-impl CmdStatErr for io::Result<ExitStatus> {
-    fn cmd_stat_err(self) -> eyre::Result<ExitStatus> {
+impl CommandStatusError for io::Result<ExitStatus> {
+    fn status_error(self) -> eyre::Result<ExitStatus> {
         let status = self?;
         if !status.success() {
             return Err(eyre!("exit status {}", status));
