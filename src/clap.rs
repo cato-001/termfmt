@@ -4,12 +4,12 @@ use clap::{Arg, ArgAction, ArgMatches, Command};
 
 use crate::{BundleFmt, DataFmt, TermFmt};
 
-pub trait TermStrategiesExt {
-    fn term_strategies(self) -> Command;
+pub trait TermFmtsExt {
+    fn termfmts(self) -> Command;
 }
 
-impl TermStrategiesExt for Command {
-    fn term_strategies(self) -> Command {
+impl TermFmtsExt for Command {
+    fn termfmts(self) -> Command {
         self.args([
             Arg::new("plain")
                 .long("plain")
@@ -35,20 +35,20 @@ impl TermStrategiesExt for Command {
     }
 }
 
-pub trait TermStrategyExt<Data, Bundle>
+pub trait TermFmtExt<Data, Bundle>
 where
     Data: DataFmt,
     Bundle: BundleFmt,
 {
-    fn term_strategy(&self, bundle: Bundle) -> TermFmt<Data, Bundle>;
+    fn termfmt(&self, bundle: Bundle) -> TermFmt<Data, Bundle>;
 }
 
-impl<Data, Bundle> TermStrategyExt<Data, Bundle> for ArgMatches
+impl<Data, Bundle> TermFmtExt<Data, Bundle> for ArgMatches
 where
     Data: DataFmt,
     Bundle: BundleFmt<Data = Data>,
 {
-    fn term_strategy(&self, bundle: Bundle) -> TermFmt<Data, Bundle> {
+    fn termfmt(&self, bundle: Bundle) -> TermFmt<Data, Bundle> {
         if self.get_flag("plain") {
             TermFmt::plain()
         } else if self.get_flag("interactive") {
