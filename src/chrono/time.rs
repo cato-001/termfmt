@@ -13,6 +13,14 @@ impl TimeFmt {
         let now = Local::now().time();
         Self { value: Some(now) }
     }
+
+    pub fn new(value: NaiveTime) -> Self {
+        Self { value: Some(value) }
+    }
+
+    pub fn option(value: Option<NaiveTime>) -> Self {
+        Self { value }
+    }
 }
 
 impl Display for TimeFmt {

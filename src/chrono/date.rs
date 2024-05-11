@@ -13,6 +13,14 @@ impl DateFmt {
         let today = Local::now().date_naive();
         Self { value: Some(today) }
     }
+
+    pub fn new(value: NaiveDate) -> Self {
+        Self { value: Some(value) }
+    }
+
+    pub fn option(value: Option<NaiveDate>) -> Self {
+        Self { value }
+    }
 }
 
 impl Display for DateFmt {

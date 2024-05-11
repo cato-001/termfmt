@@ -8,6 +8,16 @@ pub struct DeltaFmt {
     value: Option<TimeDelta>,
 }
 
+impl DeltaFmt {
+    pub fn new(value: TimeDelta) -> Self {
+        Self { value: Some(value) }
+    }
+
+    pub fn option(value: Option<TimeDelta>) -> Self {
+        Self { value }
+    }
+}
+
 impl Display for DeltaFmt {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let Some(span) = self.value else {
