@@ -25,3 +25,15 @@ pub fn termh2(value: impl TermStyle) {
 pub fn termh3(value: impl TermStyle) {
     println!("\n{}", value.fg_magenta().bold());
 }
+
+pub fn termprefix1(prefix: impl TermStyle, value: impl Display) {
+    println!("\n{} {}", prefix.fg_green().bold(), value);
+}
+
+pub fn termprefix2(prefix: impl TermStyle, value: impl Display) {
+    println!("\n{} {}", prefix.fg_blue().bold(), value);
+}
+
+pub fn termprefix3(prefix: impl TermStyle, value: impl Display) {
+    println!("\n{} {}", prefix.fg_magenta().bold(), value);
+}
