@@ -1,4 +1,5 @@
 pub use {
+    clap::{TermStrategiesExt, TermStrategyExt},
     color::TermStyle,
     command::{CommandOutputError, CommandStatusError},
     fmt::{BundleFmt, DataFmt, TermFmt},
