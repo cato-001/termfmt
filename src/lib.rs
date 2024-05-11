@@ -2,7 +2,7 @@ pub use {
     color::TermStyle,
     command::{CommandOutputError, CommandStatusError},
     fmt::{BundleFmt, DataFmt, TermFmt},
-    output::{termarrow, termerr, terminfo},
+    output::{termarrow, termerr, termheader, terminfo},
 };
 
 pub mod chrono;
