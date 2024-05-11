@@ -4,7 +4,8 @@ pub use {
     command::{CommandOutputError, CommandStatusError},
     fmt::{BundleFmt, DataFmt, TermFmt},
     output::{
-        termarrow, termerr, termh1, termh2, termh3, terminfo, termprefix1, termprefix2, termprefix3,
+        termarrow, termarrow_fg, termerr, termh1, termh2, termh3, terminfo, termprefix1,
+        termprefix2, termprefix3,
     },
 };
 
