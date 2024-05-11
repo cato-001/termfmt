@@ -1,19 +1,15 @@
 pub use {
     color::TermStyle,
-    data::{ArrayFmt, DataDisplay},
-    output::{termarrow, termerr, terminfo, termout, TermError, TermOutput},
+    fmt::{BundleFmt, DataFmt, TermFmt},
+    output::{termarrow, termerr, terminfo},
 };
 
 #[cfg(feature = "command")]
 pub mod command;
 
-#[cfg(feature = "layout")]
-pub mod layout;
-
 pub mod chrono;
-pub mod strategies;
 
+mod clap;
 mod color;
-mod data;
 mod fmt;
 mod output;
