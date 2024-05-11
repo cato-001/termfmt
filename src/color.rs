@@ -1,3 +1,4 @@
+use core::fmt;
 use std::fmt::Display;
 
 #[derive(Clone, Copy, Default)]
@@ -455,3 +456,4 @@ where
 impl<'a> TermStyle for &'a str {}
 impl TermStyle for String {}
 impl<'a> TermStyle for std::path::Display<'a> {}
+impl<'a> TermStyle for fmt::Arguments<'a> {}
