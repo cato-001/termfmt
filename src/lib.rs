@@ -1,6 +1,6 @@
 pub use {
     clap::{TermFmtExt, TermFmtsExt},
-    color::TermStyle,
+    color::{Bg, Fg, Style, TermStyle},
     command::{CommandOutputError, CommandStatusError},
     fmt::{BundleFmt, DataFmt, TermFmt},
     output::{

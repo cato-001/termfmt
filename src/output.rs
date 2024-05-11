@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use crate::TermStyle;
+use crate::{Fg, TermStyle};
 
 pub fn terminfo(value: impl Display) {
     println!("\n{} {}", "INFO".fg_green().bold(), value);
@@ -12,6 +12,10 @@ pub fn termerr(value: impl Display) {
 
 pub fn termarrow(value: impl Display) {
     println!("{} {}", "->".fg_blue().bold(), value);
+}
+
+pub fn termarrow_fg(fg: Fg, value: impl Display) {
+    println!("{} {}", "->".fg(fg).bold(), value);
 }
 
 pub fn termh1(value: impl TermStyle) {

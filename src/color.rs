@@ -2,7 +2,7 @@ use core::fmt;
 use std::fmt::Display;
 
 #[derive(Clone, Copy, Default)]
-enum Fg {
+pub enum Fg {
     #[default]
     Default = 39,
     Black = 30,
@@ -30,7 +30,7 @@ impl Display for Fg {
 }
 
 #[derive(Clone, Copy, Default)]
-enum Bg {
+pub enum Bg {
     #[default]
     Default = 49,
     Black = 40,
@@ -58,7 +58,7 @@ impl Display for Bg {
 }
 
 #[derive(Clone, Copy)]
-enum Style {
+pub enum Style {
     Reset = 0,
     Underline = 4,
     Bold = 1,
@@ -154,6 +154,9 @@ pub trait TermStyle
 where
     Self: Display + Sized,
 {
+    fn fg(self, fg: Fg) -> impl TermStyle {
+        StyleFmt::fg(self, fg)
+    }
     fn fg_black(self) -> impl TermStyle {
         StyleFmt::fg(self, Fg::Black)
     }
@@ -203,6 +206,9 @@ where
         StyleFmt::fg(self, Fg::BrightGrey)
     }
 
+    fn bg(self, bg: Bg) -> impl TermStyle {
+        StyleFmt::bg(self, bg)
+    }
     fn bg_black(self) -> impl TermStyle {
         StyleFmt::bg(self, Bg::Black)
     }
@@ -252,6 +258,9 @@ where
         StyleFmt::bg(self, Bg::BrightGrey)
     }
 
+    fn style(self, style: Style) -> impl TermStyle {
+        StyleFmt::style(self, style)
+    }
     fn underline(self) -> impl TermStyle {
         StyleFmt::style(self, Style::Underline)
     }
@@ -286,6 +295,10 @@ impl<Value> TermStyle for StyleFmt<Value>
 where
     Value: Display,
 {
+    fn fg(self, fg: Fg) -> impl TermStyle {
+        self.with_fg(fg)
+    }
+
     fn fg_black(self) -> impl TermStyle {
         self.with_fg(Fg::Black)
     }
@@ -350,6 +363,10 @@ where
         self.with_fg(Fg::BrightGrey)
     }
 
+    fn bg(self, bg: Bg) -> impl TermStyle {
+        self.with_bg(bg)
+    }
+
     fn bg_black(self) -> impl TermStyle {
         self.with_bg(Bg::Black)
     }
@@ -412,6 +429,10 @@ where
 
     fn bg_bright_grey(self) -> impl TermStyle {
         self.with_bg(Bg::BrightGrey)
+    }
+
+    fn style(self, style: Style) -> impl TermStyle {
+        self.with_style(style)
     }
 
     fn underline(self) -> impl TermStyle {
