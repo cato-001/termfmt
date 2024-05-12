@@ -30,6 +30,10 @@ pub fn termh3(value: impl TermStyle) {
     println!("\n{}", value.fg_magenta().bold());
 }
 
+pub fn termh_fg(fg: Fg, value: impl TermStyle) {
+    println!("\n{}", value.fg(fg).bold());
+}
+
 pub fn termprefix1(prefix: impl TermStyle, value: impl Display) {
     println!("\n{} {}", prefix.fg_green().bold(), value);
 }
