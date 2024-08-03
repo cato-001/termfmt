@@ -1,7 +1,13 @@
 use std::error::Error;
 use std::process::{ExitStatus, Output};
 
+use clap::{ArgMatches, Command};
 use eyre::eyre;
+
+pub trait TermCommandDefinition {
+    fn clap(&self) -> Command;
+    fn run(&self, command: &ArgMatches);
+}
 
 pub trait CommandOutputError {
     fn output_error(self) -> eyre::Result<Output>;
