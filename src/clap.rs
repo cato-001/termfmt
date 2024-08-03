@@ -38,25 +38,31 @@ impl TermFmtsExt for Command {
 pub trait TermFmtExt<Data, Bundle>
 where
     Data: DataFmt,
-    Bundle: BundleFmt,
+    Bundle: BundleFmt<Data = Data>,
 {
-    fn termfmt(&self, bundle: Bundle) -> TermFmt<Data, Bundle>;
+    fn termfmt(&self, config: &Bundle::Config) -> TermFmt<Data, Bundle>
+    where
+        Bundle::Config: Clone;
 }
 
 impl<Data, Bundle> TermFmtExt<Data, Bundle> for ArgMatches
 where
     Data: DataFmt,
     Bundle: BundleFmt<Data = Data>,
+    Bundle::Config: Clone,
 {
-    fn termfmt(&self, bundle: Bundle) -> TermFmt<Data, Bundle> {
+    fn termfmt(&self, config: &Bundle::Config) -> TermFmt<Data, Bundle>
+    where
+        Bundle::Config: Clone,
+    {
         if self.get_flag("plain") {
             TermFmt::plain()
         } else if self.get_flag("interactive") {
             TermFmt::interactive()
         } else if self.get_flag("json") {
-            TermFmt::json(bundle)
+            TermFmt::json(Bundle::new(config.clone()))
         } else if self.get_flag("csv") {
-            TermFmt::csv(bundle)
+            TermFmt::csv(Bundle::new(config.clone()))
         } else if is_stdout_interactive() {
             TermFmt::interactive()
         } else {

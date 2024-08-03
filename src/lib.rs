@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use ::clap::{ArgMatches, Command};
+use ::clap::Command;
 pub use {
     clap::{TermFmtExt, TermFmtsExt},
     color::{Bg, Fg, Style, TermStyle},

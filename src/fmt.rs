@@ -33,6 +33,9 @@ pub trait DataFmt {
 
 pub trait BundleFmt: Serialize + Sized {
     type Data;
+    type Config;
+
+    fn new(config: Self::Config) -> Self;
 
     fn push(&mut self, value: Self::Data);
     fn clear(&mut self);
