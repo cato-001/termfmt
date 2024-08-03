@@ -57,9 +57,9 @@ pub trait BundleFmt: Serialize + Sized {
     }
 }
 
-impl<Data, Bundle> TermFmt<Data, Bundle>
+impl<'a, Data, Bundle> TermFmt<Data, Bundle>
 where
-    Data: DataFmt,
+    Data: DataFmt + 'a,
     Bundle: Serialize,
     Bundle: BundleFmt<Data = Data>,
 {
@@ -83,7 +83,7 @@ where
         Self::Csv(CsvFmt::new(bundle))
     }
 
-    pub fn output(&mut self, data: Data) {
+    pub fn output<'b>(&'b mut self, data: Data) {
         match self {
             Self::Plain(_) => data.plain(),
             Self::Interactive(_) => data.interactive(),
