@@ -2,7 +2,7 @@ use std::io::{stdout, IsTerminal};
 
 use clap::{Arg, ArgAction, ArgMatches, Command};
 
-use crate::{BundleFmt, DataFmt, TermFmt};
+use crate::{BundleFmt, TermFmt};
 
 pub trait TermFmtsExt {
     fn termfmts(self) -> Command;
@@ -14,44 +14,37 @@ impl TermFmtsExt for Command {
             Arg::new("plain")
                 .long("plain")
                 .action(ArgAction::SetTrue)
-                .conflicts_with_all(["interactive", "json", "csv"])
+                .conflicts_with_all(["interactive", "json"])
                 .help("force plain output"),
             Arg::new("interactive")
                 .long("interactive")
                 .action(ArgAction::SetTrue)
-                .conflicts_with_all(["plain", "json", "csv"])
+                .conflicts_with_all(["plain", "json"])
                 .help("force interactive output"),
             Arg::new("json")
                 .long("json")
                 .action(ArgAction::SetTrue)
-                .conflicts_with_all(["plain", "interactive", "csv"])
+                .conflicts_with_all(["plain", "interactive"])
                 .help("force json output"),
-            Arg::new("csv")
-                .long("csv")
-                .action(ArgAction::SetTrue)
-                .conflicts_with_all(["plain", "interactive", "json"])
-                .help("force csv output"),
         ])
     }
 }
 
-pub trait TermFmtExt<Data, Bundle>
+pub trait TermFmtExt<Bundle>
 where
-    Data: DataFmt,
-    Bundle: BundleFmt<Data = Data>,
+    Bundle: BundleFmt,
 {
-    fn termfmt(&self, config: &Bundle::Config) -> TermFmt<Data, Bundle>
+    fn termfmt(&self, config: &Bundle::Config) -> TermFmt<Bundle>
     where
         Bundle::Config: Clone;
 }
 
-impl<Data, Bundle> TermFmtExt<Data, Bundle> for ArgMatches
+impl<Bundle> TermFmtExt<Bundle> for ArgMatches
 where
-    Data: DataFmt,
-    Bundle: BundleFmt<Data = Data>,
+    Bundle: BundleFmt,
     Bundle::Config: Clone,
 {
-    fn termfmt(&self, config: &Bundle::Config) -> TermFmt<Data, Bundle>
+    fn termfmt(&self, config: &Bundle::Config) -> TermFmt<Bundle>
     where
         Bundle::Config: Clone,
     {
@@ -61,8 +54,6 @@ where
             TermFmt::interactive()
         } else if self.get_flag("json") {
             TermFmt::json(Bundle::new(config.clone()))
-        } else if self.get_flag("csv") {
-            TermFmt::csv(Bundle::new(config.clone()))
         } else if is_stdout_interactive() {
             TermFmt::interactive()
         } else {

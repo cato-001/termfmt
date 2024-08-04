@@ -5,7 +5,7 @@ pub use {
     clap::{TermFmtExt, TermFmtsExt},
     color::{Bg, Fg, Style, TermStyle},
     command::{CommandOutputError, CommandStatusError, TermCommandDefinition},
-    fmt::{BundleFmt, DataFmt, TermFmt},
+    fmt::{BundleFmt, TermFmt},
     output::{
         termarrow, termarrow_fg, termerr, termh1, termh2, termh3, termh_fg, terminfo, termprefix1,
         termprefix2, termprefix3,
