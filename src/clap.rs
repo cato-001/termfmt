@@ -49,15 +49,15 @@ where
         Bundle::Config: Clone,
     {
         if self.get_flag("plain") {
-            TermFmt::plain()
+            TermFmt::new_plain()
         } else if self.get_flag("interactive") {
-            TermFmt::interactive()
+            TermFmt::new_interactive()
         } else if self.get_flag("json") {
-            TermFmt::json(Bundle::new(config.clone()))
+            TermFmt::new_json(Bundle::new(config.clone()))
         } else if is_stdout_interactive() {
-            TermFmt::interactive()
+            TermFmt::new_interactive()
         } else {
-            TermFmt::plain()
+            TermFmt::new_plain()
         }
     }
 }
