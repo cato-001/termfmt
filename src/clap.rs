@@ -14,16 +14,19 @@ impl TermFmtsExt for Command {
             Arg::new("plain")
                 .long("plain")
                 .action(ArgAction::SetTrue)
+                .global(true)
                 .conflicts_with_all(["interactive", "json"])
                 .help("force plain output"),
             Arg::new("interactive")
                 .long("interactive")
                 .action(ArgAction::SetTrue)
+                .global(true)
                 .conflicts_with_all(["plain", "json"])
                 .help("force interactive output"),
             Arg::new("json")
                 .long("json")
                 .action(ArgAction::SetTrue)
+                .global(true)
                 .conflicts_with_all(["plain", "interactive"])
                 .help("force json output"),
         ])

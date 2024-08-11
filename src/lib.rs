@@ -19,6 +19,7 @@ mod color;
 mod command;
 mod fmt;
 mod output;
+pub mod parse;
 
 pub struct TermCommand {
     command: Command,
