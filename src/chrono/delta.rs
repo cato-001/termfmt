@@ -53,7 +53,7 @@ impl DeltaHourMinuteFmt {
 impl Display for DeltaHourMinuteFmt {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let Some(span) = self.value else {
-   return Ok(());
+            return Ok(());
         };
         let hours = span.num_hours();
         let minutes = span.num_minutes() % 60;
@@ -64,6 +64,5 @@ impl Display for DeltaHourMinuteFmt {
         }
     }
 }
-
 
 impl TermStyle for TimeDelta {}

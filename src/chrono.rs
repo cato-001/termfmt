@@ -1,7 +1,7 @@
 pub use {
     date::DateFmt,
     delta::{DeltaFmt, DeltaHourMinuteFmt},
-    time::TimeFmt,
+    time::{TimeEditFmt, TimeFmt},
 };
 
 mod date;
