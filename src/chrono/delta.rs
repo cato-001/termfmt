@@ -36,4 +36,34 @@ impl Display for DeltaFmt {
     }
 }
 
+pub struct DeltaHourMinuteFmt {
+    value: Option<TimeDelta>,
+}
+
+impl DeltaHourMinuteFmt {
+    pub fn new(value: TimeDelta) -> Self {
+        Self { value: Some(value) }
+    }
+
+    pub fn option(value: Option<TimeDelta>) -> Self {
+        Self { value }
+    }
+}
+
+impl Display for DeltaHourMinuteFmt {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let Some(span) = self.value else {
+   return Ok(());
+        };
+        let hours = span.num_hours();
+        let minutes = span.num_minutes() % 60;
+        match (hours, minutes) {
+            (0, minutes) => write!(f, "{}m", minutes),
+            (hours, 0) => write!(f, "{}h", hours),
+            (hours, minutes) => write!(f, "{}h {}m", hours, minutes),
+        }
+    }
+}
+
+
 impl TermStyle for TimeDelta {}
