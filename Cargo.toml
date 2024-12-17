@@ -1,6 +1,6 @@
 [package]
 name = "termfmt"
-version = "0.2.7"
+version = "0.2.8"
 edition = "2021"
 description = "Opinionated formatting for library primatives with color and outputing to the terminal."
 license = "MIT"
